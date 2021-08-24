@@ -1,3 +1,3 @@
 # peak-lerna
 
-lerna构建组件库 测试
+lerna构建组件库
