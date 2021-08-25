@@ -1,7 +1,3 @@
----
-typora-root-url: ../public
----
-
 ### lerna是什么
 
 #### lerna基本概念
