@@ -3,5 +3,5 @@
 module.exports = house;
 
 function house() {
-    console.log('init house')
+    console.log('init house 2')
 }
