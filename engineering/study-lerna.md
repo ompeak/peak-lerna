@@ -49,7 +49,8 @@ npm install -g lerna
 初始化 `lerna` 项目
 
 ```
-lerna init
+lerna init # 固定模式(Fixed mode)默认为固定模式，packages下的所有包共用一个版本号(version)
+lerna init --independent # 独立模式(Independent mode)，每一个包有一个独立的版本号
 ```
 
 创建一个新的由 `lerna` 管理的包。
@@ -70,10 +71,26 @@ lerna bootstrap
 lerna add axios
 ```
 
-增加模块包到 `packages` 中指定项目 下面是将 `npm-modele1` 模块增加到 `components1` 项目中
+为packages文件夹下的package安装依赖
 
 ```go
-lerna add modele1 --scope=components1
+lerna add <package>[@version] [--dev] # 命令签名
+
+# 例如
+lerna add module-1 --scope=module-2 # 将 module-1 安装到 module-2
+lerna add module-1 --scope=module-2 --dev # 将 module-1 安装到 module-2 的 devDependencies 下
+lerna add module-1 # 将 module-1 安装到除 module-1 以外的所有模块
+lerna add babel-core # 将 babel-core 安装到所有模块
+```
+
+卸载依赖
+
+```
+$ lerna exec -- <command> [..args] # 在所有包中运行该命令
+
+# 例如
+$ lerna exec --scope=npm-list  yarn remove listr # 将 npm-list 包下的 listr 卸载
+$ lerna exec -- yarn remove listr # 将所有包下的 listr 卸载
 ```
 
 在 `packages` 中对应包下的执行任意命令 下面的命令，是对 `packages` 下的 `example-web` 项目执行 `yarn start` 命令 ，比较常用，可以把它配置到最外层的 `package.json` 中。
@@ -108,6 +125,20 @@ lerna clean
 
 > ⚠️注意下 `lerna clean` 不会删除项目最外层的根 `node_modules`
 
+lerna run
+
+运行npm script，可以指定具体的package。
+
+```
+lerna run <script> -- [..args] # 在所有包下运行指定
+
+# 例如
+lerna run test # 运行所有包的 test 命令
+lerna run build # 运行所有包的 build 命令
+lerna run --parallel watch # 观看所有包并在更改时发报，流式处理前缀输出
+lerna run --scope my-component test # 运行 my-component 模块下的 test
+```
+
 在当前项目中发布包
 
 ```go
@@ -120,7 +151,126 @@ lerna publish
 
 以上命令基本够日常开发使用了，如果需要更详细内命令内容，可以查看下面的详细文档 lerna 命令详细文档
 
+#### lerna.json解析
 
+```
+{
+  "version": "1.1.3",
+  "npmClient": "npm",
+  "command": {
+    "publish": {
+      "ignoreChanges": [
+        "ignored-file",
+        "*.md"
+      ]
+    },
+    "bootstrap": {
+      "ignore": "component-*",
+      "npmClientArgs": ["--no-package-lock"]      
+    }
+  },
+  "packages": ["packages/*"]
+}
+```
 
+**version：**当前库的版本
+**npmClient：** 允许指定命令使用的client， 默认是 npm， 可以设置成 yarn
+**command.publish.ignoreChanges：**可以指定那些目录或者文件的变更不会被publish
+**command.bootstrap.ignore：**指定不受 bootstrap 命令影响的包
+**command.bootstrap.npmClientArgs：**指定默认传给 lerna bootstrap 命令的参数
+**command.bootstrap.scope：**指定那些包会受 lerna bootstrap 命令影响
+**packages：**指定包所在的目录
 
+### 使用lerna提升开发流程体验
 
+接下来，我们从一个demo出发，了解基于lerna的开发流程。
+
+#### 项目初始化
+
+![](/images/img1.jpg)
+
+我们需要维护一个UI组件库，其包含2个组件，分别为House（房子）和Window（窗户）组件，其中House组件依赖于Window组件。
+我们使用lerna初始化整个项目，并且在packages里新建了2个package，执行命令进行初始化：
+
+```
+lerna init
+```
+
+初始化化后目录结构如下所示：
+
+> ```
+> .
+> ├── lerna.json
+> ├── package.json
+> └── packages
+>     ├── house
+>     │   ├── index.js
+>     │   ├── node_modules
+>     │   └── package.json
+>     └── window
+>         ├── index.js
+>         ├── node_modules
+>         └── package.json
+> ```
+
+### 增加依赖
+
+![img2](/images/img2.jpg)
+
+接下来，我们来为组件增加些依赖，首先House组件不能只由Window构成，还需要添加一些外部依赖（在这里我们假定为lodash）。我们执行：
+
+```
+lerna add lodash --scope=house
+```
+
+这句话会将lodash增添到House的dependencies属性里，这会儿你可以去看看package.json是不是发生变更了。
+
+我们还需要将Window添加到House的依赖里，执行：
+
+```
+lerna add window --scope=house
+```
+
+就是这么简单，它会自动检测到window隶属于当前项目，直接采用symlink的方式关联过去。
+
+symlink:符号链接，也就是平常所说的建立超链接，此时House的node_modules里的Window直接链接至项目里的Window组件，而不会再重新拉取一份，这个对本地开发是非常有用的。
+
+#### 发布到npm
+
+![img3](/images/img3.jpg)
+
+接下来我们只需要简单地执行lerna publish，确认升级的版本号，就可以批量将所有的package发布到远程。
+
+> 默认情况下会推送到系统目前npm对应的registry里，实际项目里可以根据配置leran.json切换所使用的npm客户端。
+
+### 更新模块
+
+![img4](/images/img4.jpg)
+
+接下来，我们变更了Window组件，执行一下lerna updated，便可以得知有哪些组件发生了变更。
+
+```
+→ lerna updated
+lerna info version 2.9.1
+lerna info Checking for updated packages...
+lerna info Comparing with v1.0.9.
+lerna info Checking for prereleased packages...
+lerna info result
+```
+
+我们可以看到，虽然我们只变更了window组件，但是lerna能够帮助我们检查到所有依赖于它的组件，对于没有关联的组件，是不会出现在更新列表里的，这个对于相比之前人工维护版本依赖的更新，是非常稳健的。
+
+#### 集中版本号或独立版本号
+
+截止目前，我们已经成功发布了2个package，现在再新增一个Tree组件，它和其他2个package保持独立，随后我们执行lerna publish，它会提示Tree组件的版本号将会从0.0.0升级至1.0.0，但是事实上Tree组件仅仅是刚创建的，这点不利于版本号的语义化，lerna已经考虑到了这一点，它包含2种版本号管理机制。
+
+- fixed模式下，模块发布新版本时，都会升级到leran.json里编写的version字段
+- independent模式下，模块发布新版本时，会逐个询问需要升级的版本号，基准版本为它自身的package.json，这样就避免了上述问题。
+
+如果需要各个组件维护自身的版本号，那么就使用independent模式，只需要去配置leran.json即可。
+
+#### 总结
+
+![img5](/images/img5.jpg)
+
+lerna不负责构建，测试等任务，它提出了一种集中管理package的目录模式，提供了一套自动化管理程序，让开发者不必再深耕到具体的组件里维护内容，在项目根目录就可以全局掌控，基于npm scripts，可以很好地完成组件构建，代码格式化等操作，并在最后一公里，用lerna变更package版本，将其上传至远端。
