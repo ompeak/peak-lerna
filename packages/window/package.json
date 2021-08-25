@@ -1,5 +1,5 @@
 {
-  "name": "window",
+  "name": "@ompeak/window",
   "version": "1.0.1",
   "description": "> TODO: description",
   "author": "peakcary <peakcary@163.com>",
@@ -25,5 +25,6 @@
   },
   "bugs": {
     "url": "https://github.com/ompeak/peak-lerna/issues"
-  }
+  },
+  "gitHead": "9d660b67d89b81fd0f675bb8c0d834293d607ffc"
 }
