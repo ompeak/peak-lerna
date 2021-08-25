@@ -1,5 +1,5 @@
 {
-  "name": "@ompeak/house",
+  "name": "ompeak-house",
   "version": "1.0.2",
   "description": "> TODO: description",
   "author": "peakcary <peakcary@163.com>",
@@ -30,5 +30,5 @@
     "lodash": "^4.17.21",
     "window": "^1.0.1"
   },
-  "gitHead": "9d660b67d89b81fd0f675bb8c0d834293d607ffc"
+  "gitHead": "2685694133246b5cc7997b88c04612fb0cd7ef82"
 }
