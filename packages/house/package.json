@@ -1,0 +1,33 @@
+{
+  "name": "house",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "peakcary <peakcary@163.com>",
+  "homepage": "https://github.com/ompeak/peak-lerna#readme",
+  "license": "ISC",
+  "main": "lib/house.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "http://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ompeak/peak-lerna.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/ompeak/peak-lerna/issues"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "window": "^0.0.0"
+  }
+}
