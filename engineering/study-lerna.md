@@ -40,7 +40,7 @@ npm install -g lerna
 
 `mkdir lerna-demo`,在当前目录下创建文件夹`lerna-demo`,然后使用命令 `lerna init`执行成功后，目录下将会生成这样的目录结构。，一个 `hello world`级别的 `lerna` 项目就完成了。
 
-![](/images/1.png)
+![](https://tva1.sinaimg.cn/large/008i3skNgy1gtt8o20ot8j607705tjrb02.jpg)
 
 #### lerna 常用命令
 
@@ -187,7 +187,7 @@ lerna publish
 
 #### 项目初始化
 
-![](/images/img1.jpg)
+![](https://tva1.sinaimg.cn/large/008i3skNgy1gtt8ll95xij60k00b974e02.jpg)
 
 我们需要维护一个UI组件库，其包含2个组件，分别为House（房子）和Window（窗户）组件，其中House组件依赖于Window组件。
 我们使用lerna初始化整个项目，并且在packages里新建了2个package，执行命令进行初始化：
@@ -215,7 +215,7 @@ lerna init
 
 ### 增加依赖
 
-![img2](/images/img2.jpg)
+![](https://tva1.sinaimg.cn/large/008i3skNgy1gtt8m8td4ij60k00b9glr02.jpg)
 
 接下来，我们来为组件增加些依赖，首先House组件不能只由Window构成，还需要添加一些外部依赖（在这里我们假定为lodash）。我们执行：
 
@@ -237,7 +237,9 @@ symlink:符号链接，也就是平常所说的建立超链接，此时House的n
 
 #### 发布到npm
 
-![img3](/images/img3.jpg)
+![](https://tva1.sinaimg.cn/large/008i3skNgy1gtt8mrwuz2j60k00b9mxe02.jpg)
+
+
 
 接下来我们只需要简单地执行lerna publish，确认升级的版本号，就可以批量将所有的package发布到远程。
 
@@ -245,7 +247,11 @@ symlink:符号链接，也就是平常所说的建立超链接，此时House的n
 
 ### 更新模块
 
-![img4](/images/img4.jpg)
+![](https://tva1.sinaimg.cn/large/008i3skNgy1gtt8n3ojfyj60k00b93yr02.jpg)
+
+
+
+
 
 接下来，我们变更了Window组件，执行一下lerna updated，便可以得知有哪些组件发生了变更。
 
@@ -271,6 +277,8 @@ lerna info result
 
 #### 总结
 
-![img5](/images/img5.jpg)
+![](https://tva1.sinaimg.cn/large/008i3skNgy1gtt8nev8mmj60k00b93yr02.jpg)
+
+
 
 lerna不负责构建，测试等任务，它提出了一种集中管理package的目录模式，提供了一套自动化管理程序，让开发者不必再深耕到具体的组件里维护内容，在项目根目录就可以全局掌控，基于npm scripts，可以很好地完成组件构建，代码格式化等操作，并在最后一公里，用lerna变更package版本，将其上传至远端。
