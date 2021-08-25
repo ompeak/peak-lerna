@@ -1,6 +1,6 @@
 {
   "name": "house",
-  "version": "0.0.0",
+  "version": "1.0.1",
   "description": "> TODO: description",
   "author": "peakcary <peakcary@163.com>",
   "homepage": "https://github.com/ompeak/peak-lerna#readme",
@@ -28,6 +28,6 @@
   },
   "dependencies": {
     "lodash": "^4.17.21",
-    "window": "^0.0.0"
+    "window": "^1.0.1"
   }
 }
