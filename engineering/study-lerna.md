@@ -1,7 +1,3 @@
----
-typora-root-url: ../public
----
-
 ### lerna是什么
 
 #### lerna基本概念
@@ -14,15 +10,15 @@ typora-root-url: ../public
 
 #### lerna 解决了哪些痛点
 
-资源浪费
+**资源浪费**
 
 通常情况下，一个公司的业务项目只有一个主干，多 `git repo` 的方式，这样 `node_module` 会出现大量的冗余，比如它们可能都会安装 `React`、`React-dom` 等包，浪费了大量存储空间。
 
-调试繁琐
+**调试繁琐**
 
 很多公共的包通过 `npm` 安装，想要调试依赖的包时，需要通过 `npm link` 的方式进行调试。
 
-资源包升级问题
+**资源包升级问题**
 
 一个项目依赖了多个 `npm` 包，当某一个子 `npm` 包代码修改升级时，都要对主干项目包进行升级修改。(这个问题感觉是最烦的，可能一个版本号就要去更新一下代码并发布)
 
@@ -36,7 +32,7 @@ typora-root-url: ../public
 npm install -g lerna
 ```
 
-初始化一个lerna 项目
+**初始化一个lerna 项目**
 
 `mkdir lerna-demo`,在当前目录下创建文件夹`lerna-demo`,然后使用命令 `lerna init`执行成功后，目录下将会生成这样的目录结构。，一个 `hello world`级别的 `lerna` 项目就完成了。
 
@@ -46,32 +42,32 @@ npm install -g lerna
 
 介绍一些 `lerna` 常用的命令,常用命令这部分可以简单过一遍，当作一个工具集收藏就行，需要的时候来找下，用着用着就熟练了，主要可以实操下下面的实战小练习，这个过程会遇到一些坑的
 
-初始化 `lerna` 项目
+**初始化 `lerna` 项目**
 
 ```
 lerna init # 固定模式(Fixed mode)默认为固定模式，packages下的所有包共用一个版本号(version)
 lerna init --independent # 独立模式(Independent mode)，每一个包有一个独立的版本号
 ```
 
-创建一个新的由 `lerna` 管理的包。
+**创建一个新的由 `lerna` 管理的包**
 
 ```go
 lerna create <name>
 ```
 
-安装所有·依赖项并连接所有的交叉依赖
+**安装所有·依赖项并连接所有的交叉依赖**
 
 ```go
 lerna bootstrap
 ```
 
-增加模块包到最外层的公共 `node_modules`中
+**增加模块包到最外层的公共 `node_modules`中**
 
 ```go
 lerna add axios
 ```
 
-为packages文件夹下的package安装依赖
+**为packages文件夹下的package安装依赖**
 
 ```go
 lerna add <package>[@version] [--dev] # 命令签名
@@ -83,7 +79,7 @@ lerna add module-1 # 将 module-1 安装到除 module-1 以外的所有模块
 lerna add babel-core # 将 babel-core 安装到所有模块
 ```
 
-卸载依赖
+**卸载依赖**
 
 ```
 $ lerna exec -- <command> [..args] # 在所有包中运行该命令
@@ -105,7 +101,7 @@ lerna exec --scope example-web -- yarn start
 lerna exec -- rm -rf ./node_modules
 ```
 
-显示所有的安装的包
+**显示所有的安装的包**
 
 ```go
 lerna list // 等同于 lerna ls
@@ -139,7 +135,7 @@ lerna run --parallel watch # 观看所有包并在更改时发报，流式处理
 lerna run --scope my-component test # 运行 my-component 模块下的 test
 ```
 
-在当前项目中发布包
+**在当前项目中发布包**
 
 ```go
 lerna publish
@@ -173,13 +169,13 @@ lerna publish
 }
 ```
 
-**version：**当前库的版本
-**npmClient：** 允许指定命令使用的client， 默认是 npm， 可以设置成 yarn
-**command.publish.ignoreChanges：**可以指定那些目录或者文件的变更不会被publish
-**command.bootstrap.ignore：**指定不受 bootstrap 命令影响的包
-**command.bootstrap.npmClientArgs：**指定默认传给 lerna bootstrap 命令的参数
-**command.bootstrap.scope：**指定那些包会受 lerna bootstrap 命令影响
-**packages：**指定包所在的目录
+version：当前库的版本
+npmClient：允许指定命令使用的client， 默认是 npm， 可以设置成 yarn
+command.publish.ignoreChanges：可以指定那些目录或者文件的变更不会被publish
+command.bootstrap.ignore：指定不受 bootstrap 命令影响的包
+command.bootstrap.npmClientArgs：指定默认传给 lerna bootstrap 命令的参数
+command.bootstrap.scope：指定那些包会受 lerna bootstrap 命令影响
+packages：指定包所在的目录
 
 ### 使用lerna提升开发流程体验
 
