@@ -1,0 +1,30 @@
+{
+  "name": "ompeak-window",
+  "version": "1.0.3",
+  "description": "> TODO: description",
+  "author": "peakcary <peakcary@163.com>",
+  "homepage": "https://github.com/ompeak/peak-lerna#readme",
+  "license": "ISC",
+  "main": "lib/window.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "http://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ompeak/peak-lerna.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/ompeak/peak-lerna/issues"
+  },
+  "gitHead": "2685694133246b5cc7997b88c04612fb0cd7ef82"
+}
