@@ -126,7 +126,7 @@ console.log(a.call(null));
 
  
 
-### object.assign和扩展运算法是深拷贝还是浅拷贝，两者区别
+### Object.assign和扩展运算法是深拷贝还是浅拷贝，两者区别
 
 扩展运算符：
 
